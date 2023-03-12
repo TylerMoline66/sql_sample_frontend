@@ -12,7 +12,6 @@ def view_customers():
         print(f"{val[0]:<13}{val[1]:<30}{val[2]:<30}{val[3]:<10}{val[4]}")
         print(f"{'-----------':<13}{'----':<30}{'----':<30}{'-----':<10}{'------------'}")
 
-
 # Search for customer by name
 def search_by_name():
     user_input = input('Search by name: ')
@@ -23,8 +22,6 @@ def search_by_name():
          the_result = (f"ID: {i[0]}\n----------\nName: {i[1]}\n----------\nStreet Address: {i[2]}\n---------\nCity: {i[3]}\n----------\nState: {i[4]}\n----------\nPostal Code: {i[5]}\n----------\nPhone: {i[6]}\n----------\nEmail: {i[7]}")
 
     return the_result
-
-
 
 # Update customers
 def update_customer():
@@ -80,7 +77,6 @@ def add_a_customer():
         else:
             print('Ok try again')
 
-
 # to remove a customer
 def remove_a_customer():
     rows = database.find_all()
@@ -92,10 +88,9 @@ def remove_a_customer():
     removed_customer = int(input('What customer would you like to remove?(SELECT BY ID): '))
     
     saved = database.find_one_from_id(removed_customer)
-    print(saved)
+    print(f"\n{saved}\n")
 
-    remove = input(f'Are you sure you would like to remove {saved} from the data base? THIS IS PERMANENT(Y or N): ').lower()
+    remove = input(f'Are you sure you would like to remove "{saved[0][1]}" from the data base? THIS IS PERMANENT(Y or N): ').lower()
 
     if remove == 'y':
        return database.delete(removed_customer)
-

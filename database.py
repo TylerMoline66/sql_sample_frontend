@@ -49,4 +49,3 @@ def delete(value):
 
   if final_check == 'y':
     connection.commit()
-  
