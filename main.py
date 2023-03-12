@@ -2,7 +2,7 @@ import functions
 import os
 
 
-options = ['View all customers', 'Search customers', 'Add new customer','Remove a customer', 'Quit']
+options = ['View all customers', 'Search customers', 'Add new customer','Remove a customer','Update a customer', 'Quit']
 
 while True:
     # os.system('clear')
@@ -23,6 +23,8 @@ while True:
        functions.add_a_customer()
     elif user_input == '4':
        functions.remove_a_customer()
+    elif user_input == '5':
+       functions.update_customer()
     else:
       break
       

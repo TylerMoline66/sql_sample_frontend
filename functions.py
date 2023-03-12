@@ -13,8 +13,6 @@ def view_customers():
         print(f"{'-----------':<13}{'----':<30}{'----':<30}{'-----':<10}{'------------'}")
 
 
-      
-
 # Search for customer by name
 def search_by_name():
     user_input = input('Search by name: ')
@@ -30,52 +28,57 @@ def search_by_name():
 
 # Update customers
 def update_customer():
-    user_id_input = input("Please enter the Customer ID for the customer you would like to update:")
-    if user_id_input.isalpha():
-        print("Please enter a valid number")
-        return         
-    if user_id_input != None:
-        id_data = list(cursor.execute("SELECT * FROM Customers WHERE customer_id = ?",(user_id_input,)).fetchone())
-        values = [{id_data[0]},{id_data[1]},{id_data[2]},{id_data[3]},{id_data[4]},{id_data[5]},{id_data[6]},{id_data[7]}]
-        
-        print(f'\n1:  NAME:           {id_data[1]}\n2:  STREET ADDRESS: {id_data[2]}\n3:  CITY:           {id_data[3]}\n4:  STATE:          {id_data[4]}\n5:  POSTAL CODE:    {id_data[5]}\n6:  PHONE:          {id_data[6]}\n7:  EMAIL:          {id_data[7]}\n')
-        field_to_update = input('\nPlease enter the number of the field you would like to update:\n>>>')
-        if field_to_update.isalpha():
-            print("Please enter a valid number:")
-            return
-        elif field_to_update =='1':
-            id_data[1] = input("New name:")
-        elif field_to_update =='2':
-            id_data[2] = input("New address:")
-        elif field_to_update =='3':
-            id_data[3] = input("New city:")
-        elif field_to_update =='4':
-            id_data[4] = input("New state:")
-        elif field_to_update == '5':
-            id_data[5] = input("New postal code:")
-        elif field_to_update == '6':
-            id_data[6] = input("New phone:")
-        elif field_to_update == '7':
-            id_data[7] = input("New email:")
-        else:
-            return(id_data)
+
+    view_customers()
+
+    print()
+    user_id_input = int(input("Please enter the Customer ID for the customer you would like to update:"))
+
+    id_data = database.find_one_from_id(user_id_input)
+    values = [id_data[0][0],id_data[0][1],id_data[0][2],id_data[0][3],id_data[0][4],id_data[0][5],id_data[0][6],id_data[0][7]]
     
-        updated_values = id_data[1:]
-        updated_values.append(id_data[0])
-      
-    query = f'UPDATE Customers SET name = ?, street_address = ?, city = ?, state=?, postal_code = ?, phone = ?, email=?  WHERE customer_id = ?'
+    for i, value in enumerate(values):
+        print(f'Field {i}: {value}')
 
-    cursor.execute(query,updated_values)
-    connection.commit()
-    print(f"Customer ID: {user_id_input} has been updated.")
+    while True:
+        print()
+        value_to_update = int(input('What field number would you like to update? please just choose a number: '))
+        print()
 
+        print(f"\n{values[value_to_update]}\n")
+
+        updated_value = input('What would you like to update the value to be? ')
+
+        print(f"\nthe field of {values[value_to_update]} will be changed to {updated_value}\n")
+        final_choice = input('are you sure you want to update the values above?(Y or N): ').lower()
+
+        if final_choice == 'y':
+            values[value_to_update] = updated_value
+            database.update(values)
+            return
 
 # To add a customer
 def add_a_customer():
     while True:
-        result = database.add()
-        if result == True or result == None:
+        add_name = input('What is the new customers name: ')
+        add_street_address = input('What is the new customers street address: ')
+        add_city = input('What is the new customers city: ')
+        add_state = input('What is the new customers state: ')
+        add_zip = input('What is the new customers zip code: ')
+        add_phone = input('What is the new customers phone number: ')
+        add_email = input('What is the new customers email: ')
+
+        new_customer = [add_name, add_street_address, add_city, add_state, add_zip, add_phone, add_email]
+
+        add_new_user = input(f'{new_customer}\nAre you sure you would like to add this customer?(Y or N or [Q]uit): ').lower()
+                
+        if add_new_user == 'y':
+            database.add(new_customer)
             return 'Action Complete'
+        elif add_new_user == 'q':
+            break
+        else:
+            print('Ok try again')
 
 
 # to remove a customer
