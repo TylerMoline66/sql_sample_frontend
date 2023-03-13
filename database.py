@@ -31,14 +31,18 @@ def add(input):
   connection.commit()
 
 # ------------------------------UPDATE CUSTOMER QUERY------------------------------
-def update(input):
+def update(value):
 
   query = 'UPDATE Customers SET name = ?, street_address = ?, city = ?, state = ?, postal_code = ?, phone = ?, email = ? WHERE customer_id = ?'
 
-  values = (input[1], input[2], input[3], input[4], input[5], input[6], input[7], input[0])
+  values = (value[1], value[2], value[3], value[4], value[5], value[6], value[7], value[0])
   cursor.execute(query, values)
-  connection.commit()
-  return
+
+  user_input = input('Are you sure??(Y or N): ' )
+
+  if user_input == 'y':  
+    connection.commit()
+    return
 
 # ------------------------------REMOVE CUSTOMER QUERY------------------------------
 def delete(value):

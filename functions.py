@@ -1,6 +1,6 @@
 import database
 
-# View all customers function
+# ----------View all customers function----------
 def view_customers():
     rows = database.find_all()
     
@@ -12,7 +12,7 @@ def view_customers():
         print(f"{val[0]:<13}{val[1]:<30}{val[2]:<30}{val[3]:<10}{val[4]}")
         print(f"{'-----------':<13}{'----':<30}{'----':<30}{'-----':<10}{'------------'}")
 
-# Search for customer by name
+# ----------Search for customer by name----------
 def search_by_name():
     user_input = input('Search by name: ')
     result = database.find_one(user_input)
@@ -23,7 +23,7 @@ def search_by_name():
 
     return the_result
 
-# Update customers
+# ----------Update customers----------
 def update_customer():
 
     view_customers()
@@ -54,7 +54,7 @@ def update_customer():
             database.update(values)
             return
 
-# To add a customer
+# ----------To add a customer----------
 def add_a_customer():
     while True:
         add_name = input('What is the new customers name: ')
@@ -77,7 +77,7 @@ def add_a_customer():
         else:
             print('Ok try again')
 
-# to remove a customer
+# ----------to remove a customer----------
 def remove_a_customer():
     rows = database.find_all()
 
